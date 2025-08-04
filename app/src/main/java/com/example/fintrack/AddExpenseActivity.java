@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -28,7 +28,7 @@ import java.util.Locale;
 public class AddExpenseActivity extends AppCompatActivity {
     private EditText titleEditText, amountEditText, notesEditText;
     private Button dateButton, timeButton, photoButton, saveButton;
-    private Spinner categorySpinner;
+    private AutoCompleteTextView categorySpinner;
     private ImageView photoImageView;
     
     private String selectedDate = "";
@@ -56,7 +56,7 @@ public class AddExpenseActivity extends AppCompatActivity {
         String[] categories = {"Food & Dining", "Transportation", "Shopping", "Entertainment", "Healthcare", "Education", "Utilities", "Other"};
         android.widget.ArrayAdapter<String> categoryAdapter = new android.widget.ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, categories);
         categorySpinner.setAdapter(categoryAdapter);
-        categorySpinner.setSelection(0); // Set first item as default
+        categorySpinner.setText(categories[0], false); // Set first item as default
 
         // Set current date and time as default
         Calendar calendar = Calendar.getInstance();
@@ -180,7 +180,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     private void saveExpense() {
         String title = titleEditText.getText().toString().trim();
         String amountStr = amountEditText.getText().toString().trim();
-        String category = categorySpinner.getSelectedItem().toString();
+        String category = categorySpinner.getText().toString();
         String notes = notesEditText.getText().toString().trim();
 
         if (title.isEmpty()) {
