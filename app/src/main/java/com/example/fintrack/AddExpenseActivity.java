@@ -56,7 +56,7 @@ public class AddExpenseActivity extends AppCompatActivity {
         String[] categories = {"Food & Dining", "Transportation", "Shopping", "Entertainment", "Healthcare", "Education", "Utilities", "Other"};
         android.widget.ArrayAdapter<String> categoryAdapter = new android.widget.ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, categories);
         categorySpinner.setAdapter(categoryAdapter);
-        categorySpinner.setText(categories[0], false);
+        categorySpinner.setSelection(0); // Set first item as default
 
         // Set current date and time as default
         Calendar calendar = Calendar.getInstance();
@@ -133,12 +133,14 @@ public class AddExpenseActivity extends AppCompatActivity {
         timePickerDialog.show();
     }
 
+    @SuppressWarnings("deprecation")
     private void openImagePicker() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         
