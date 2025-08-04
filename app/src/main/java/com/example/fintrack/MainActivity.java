@@ -3,6 +3,7 @@ package com.example.fintrack;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,8 +12,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.appbar.MaterialToolbar;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
@@ -47,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
         // Initialize database and preferences
         database = ExpenseDatabase.getInstance(this);
         sharedPreferences = getSharedPreferences("FinTrackSettings", MODE_PRIVATE);
+
+        // Set up toolbar
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("FinTrack");
+        }
 
         // Initialize dashboard views
         tvTotalExpenses = findViewById(R.id.tv_total_expenses);
@@ -86,12 +96,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("MainActivity", "onResume called");
         loadExpenses();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d("MainActivity", "Creating options menu");
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        Log.d("MainActivity", "Menu inflated successfully");
+        
+        // Debug: Check if menu items are created
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            Log.d("MainActivity", "Menu item: " + item.getTitle() + " with ID: " + item.getItemId());
+        }
+        
         return true;
     }
 
@@ -100,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         
         if (id == R.id.action_settings) {
+            Log.d("MainActivity", "Settings menu item clicked");
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
             return true;

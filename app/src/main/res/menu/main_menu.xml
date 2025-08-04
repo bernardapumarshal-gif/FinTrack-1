@@ -6,6 +6,6 @@
         android:id="@+id/action_settings"
         android:title="Settings"
         android:icon="@drawable/ic_settings"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
         
 </menu> 

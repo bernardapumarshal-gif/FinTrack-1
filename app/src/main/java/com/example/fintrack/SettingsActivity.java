@@ -2,6 +2,7 @@ package com.example.fintrack;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -22,6 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("SettingsActivity", "onCreate called");
         setContentView(R.layout.activity_settings);
 
         // Initialize SharedPreferences
@@ -47,10 +49,14 @@ public class SettingsActivity extends AppCompatActivity {
         loadSettings();
 
         // Save button click listener
-        saveButton.setOnClickListener(v -> saveSettings());
+        saveButton.setOnClickListener(v -> {
+            Log.d("SettingsActivity", "Save button clicked");
+            saveSettings();
+        });
     }
 
     private void setupCurrencySpinner() {
+        Log.d("SettingsActivity", "Setting up currency spinner");
         String[] currencies = {
             "RM (Malaysian Ringgit)",
             "USD (US Dollar)",
@@ -68,10 +74,15 @@ public class SettingsActivity extends AppCompatActivity {
             android.R.layout.simple_spinner_item, currencies);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         currencySpinner.setAdapter(adapter);
+        
+        // Set a default selection if none is set
+        currencySpinner.setSelection(0);
+        Log.d("SettingsActivity", "Currency spinner setup complete");
     }
 
     private void loadSettings() {
         String savedCurrency = sharedPreferences.getString(KEY_CURRENCY, DEFAULT_CURRENCY);
+        Log.d("SettingsActivity", "Loading settings, saved currency: " + savedCurrency);
         
         // Find the index of the saved currency
         String[] currencies = {
@@ -81,6 +92,7 @@ public class SettingsActivity extends AppCompatActivity {
         for (int i = 0; i < currencies.length; i++) {
             if (currencies[i].equals(savedCurrency)) {
                 currencySpinner.setSelection(i);
+                Log.d("SettingsActivity", "Set spinner to position: " + i);
                 break;
             }
         }
@@ -91,7 +103,10 @@ public class SettingsActivity extends AppCompatActivity {
             "RM", "USD", "EUR", "GBP", "SGD", "JPY", "AUD", "CAD", "CHF", "CNY"
         };
         
-        String selectedCurrency = currencies[currencySpinner.getSelectedItemPosition()];
+        int selectedPosition = currencySpinner.getSelectedItemPosition();
+        String selectedCurrency = currencies[selectedPosition];
+        
+        Log.d("SettingsActivity", "Selected currency: " + selectedCurrency + " at position: " + selectedPosition);
         
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_CURRENCY, selectedCurrency);
