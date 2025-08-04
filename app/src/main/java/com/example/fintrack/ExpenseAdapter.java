@@ -5,13 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -43,40 +40,35 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
     }
 
     class ExpenseViewHolder extends RecyclerView.ViewHolder {
-        private TextView titleText, amountText, dateText, categoryText;
-        private ImageView photoImage;
-        private ImageButton shareButton, deleteButton;
+        private TextView tvTitle, tvAmount, tvDate, tvCategory, tvTime;
+        private View categoryIndicator;
+        private ImageButton btnShare, btnDelete;
 
         public ExpenseViewHolder(@NonNull View itemView) {
             super(itemView);
-            titleText = itemView.findViewById(R.id.text_title);
-            amountText = itemView.findViewById(R.id.text_amount);
-            dateText = itemView.findViewById(R.id.text_date);
-            categoryText = itemView.findViewById(R.id.text_category);
-            photoImage = itemView.findViewById(R.id.image_photo);
-            shareButton = itemView.findViewById(R.id.button_share);
-            deleteButton = itemView.findViewById(R.id.button_delete);
+            tvTitle = itemView.findViewById(R.id.tv_title);
+            tvAmount = itemView.findViewById(R.id.tv_amount);
+            tvDate = itemView.findViewById(R.id.tv_date);
+            tvCategory = itemView.findViewById(R.id.tv_category);
+            tvTime = itemView.findViewById(R.id.tv_time);
+            categoryIndicator = itemView.findViewById(R.id.category_indicator);
+            btnShare = itemView.findViewById(R.id.btn_share);
+            btnDelete = itemView.findViewById(R.id.btn_delete);
         }
 
         public void bind(final Expense expense) {
-            titleText.setText(expense.getTitle());
-            amountText.setText("$" + String.format("%.2f", expense.getAmount()));
-            dateText.setText(expense.getDate() + " " + expense.getTime());
-            categoryText.setText(expense.getCategory());
+            tvTitle.setText(expense.getTitle());
+            tvAmount.setText(String.format("$%.2f", expense.getAmount()));
+            tvDate.setText(expense.getDate());
+            tvCategory.setText(expense.getCategory());
+            tvTime.setText(expense.getTime());
 
-            // Load photo if available
-            if (expense.getPhotoPath() != null && !expense.getPhotoPath().isEmpty()) {
-                photoImage.setVisibility(View.VISIBLE);
-                Glide.with(context)
-                        .load(expense.getPhotoPath())
-                        .centerCrop()
-                        .into(photoImage);
-            } else {
-                photoImage.setVisibility(View.GONE);
-            }
+            // Set category color indicator
+            int color = getCategoryColor(expense.getCategory());
+            categoryIndicator.setBackgroundColor(color);
 
             // Share button
-            shareButton.setOnClickListener(new View.OnClickListener() {
+            btnShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (context instanceof MainActivity) {
@@ -86,7 +78,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
             });
 
             // Delete button
-            deleteButton.setOnClickListener(new View.OnClickListener() {
+            btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (context instanceof MainActivity) {
@@ -94,6 +86,27 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
                     }
                 }
             });
+        }
+
+        private int getCategoryColor(String category) {
+            switch (category) {
+                case "Food & Dining":
+                    return context.getColor(R.color.category_food);
+                case "Transportation":
+                    return context.getColor(R.color.category_transport);
+                case "Shopping":
+                    return context.getColor(R.color.category_shopping);
+                case "Entertainment":
+                    return context.getColor(R.color.category_entertainment);
+                case "Healthcare":
+                    return context.getColor(R.color.category_healthcare);
+                case "Education":
+                    return context.getColor(R.color.category_education);
+                case "Utilities":
+                    return context.getColor(R.color.category_utilities);
+                default:
+                    return context.getColor(R.color.category_other);
+            }
         }
     }
 } 
