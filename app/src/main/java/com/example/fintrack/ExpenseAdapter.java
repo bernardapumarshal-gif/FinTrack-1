@@ -58,7 +58,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
 
         public void bind(final Expense expense) {
             tvTitle.setText(expense.getTitle());
-            tvAmount.setText(String.format("$%.2f", expense.getAmount()));
+            tvAmount.setText(String.format("%s%.2f", getCurrencySymbol(), expense.getAmount()));
             tvDate.setText(expense.getDate());
             tvCategory.setText(expense.getCategory());
             tvTime.setText(expense.getTime());
@@ -107,6 +107,13 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
                 default:
                     return context.getColor(R.color.category_other);
             }
+        }
+
+        private String getCurrencySymbol() {
+            // Get currency from SharedPreferences
+            android.content.SharedPreferences prefs = context.getSharedPreferences("FinTrackSettings", android.content.Context.MODE_PRIVATE);
+            String currency = prefs.getString("currency", "RM");
+            return SettingsActivity.getCurrencySymbol(currency);
         }
     }
 } 

@@ -70,12 +70,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         public void bind(CategorySummary category) {
             tvCategory.setText(category.category);
-            tvAmount.setText(String.format("$%.2f", category.amount));
+            tvAmount.setText(String.format("%s%.2f", getCurrencySymbol(), category.amount));
             tvPercentage.setText(String.format("%.1f%%", category.percentage));
             
             // Set color based on category
             int color = getCategoryColor(category.category);
             colorIndicator.setBackgroundColor(color);
+        }
+
+        private String getCurrencySymbol() {
+            // Get currency from SharedPreferences
+            android.content.SharedPreferences prefs = itemView.getContext()
+                .getSharedPreferences("FinTrackSettings", android.content.Context.MODE_PRIVATE);
+            String currency = prefs.getString("currency", "RM");
+            return SettingsActivity.getCurrencySymbol(currency);
         }
 
         private int getCategoryColor(String category) {

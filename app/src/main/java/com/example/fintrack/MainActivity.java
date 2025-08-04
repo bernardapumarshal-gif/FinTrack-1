@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Expense> expenseList;
     private List<CategoryAdapter.CategorySummary> categoryList;
     private ExpenseDatabase database;
+    private SharedPreferences sharedPreferences;
     
     // Dashboard views
     private TextView tvTotalExpenses;
@@ -42,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize database
+        // Initialize database and preferences
         database = ExpenseDatabase.getInstance(this);
+        sharedPreferences = getSharedPreferences("FinTrackSettings", MODE_PRIVATE);
 
         // Initialize dashboard views
         tvTotalExpenses = findViewById(R.id.tv_total_expenses);
@@ -97,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         
         if (id == R.id.action_settings) {
-            // TODO: Implement settings activity
-            Toast.makeText(this, "Settings coming soon!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
             return true;
         } else if (id == R.id.action_export) {
             exportData();
@@ -178,9 +180,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         
-        tvTotalExpenses.setText(String.format("Total Expenses: $%.2f", totalAmount));
-        tvMonthAmount.setText(String.format("$%.2f", monthAmount));
-        tvAvgPerDay.setText(String.format("$%.2f", avgPerDay));
+        String currency = SettingsActivity.getCurrentCurrency(sharedPreferences);
+        String currencySymbol = SettingsActivity.getCurrencySymbol(currency);
+        
+        tvTotalExpenses.setText(String.format("Total Expenses: %s%.2f", currencySymbol, totalAmount));
+        tvMonthAmount.setText(String.format("%s%.2f", currencySymbol, monthAmount));
+        tvAvgPerDay.setText(String.format("%s%.2f", currencySymbol, avgPerDay));
     }
 
     private void updateCategoryBreakdown(List<Expense> expenses) {
@@ -218,8 +223,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void shareExpense(Expense expense) {
+        String currency = SettingsActivity.getCurrentCurrency(sharedPreferences);
+        String currencySymbol = SettingsActivity.getCurrencySymbol(currency);
+        
         String shareText = "Expense: " + expense.getTitle() + 
-                          "\nAmount: $" + expense.getAmount() + 
+                          "\nAmount: " + currencySymbol + expense.getAmount() + 
                           "\nDate: " + expense.getDate() + 
                           "\nTime: " + expense.getTime() + 
                           "\nCategory: " + expense.getCategory() + 
