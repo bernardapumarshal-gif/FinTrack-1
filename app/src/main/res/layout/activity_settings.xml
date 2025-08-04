@@ -63,16 +63,25 @@
                         android:layout_marginBottom="16dp" />
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_layout_currency"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Currency"
+                        app:boxStrokeColor="@color/primary"
+                        app:hintTextColor="@color/primary"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-                        <Spinner
-                            android:id="@+id/spinner_currency"
+                        <AutoCompleteTextView
+                            android:id="@+id/auto_complete_currency"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@null" />
+                            android:inputType="none"
+                            android:focusable="false"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            android:padding="16dp"
+                            android:background="@null"
+                            android:popupBackground="@color/card_background" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
