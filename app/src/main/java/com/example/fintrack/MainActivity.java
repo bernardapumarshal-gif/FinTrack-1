@@ -103,12 +103,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
             return true;
-        } else if (id == R.id.action_export) {
-            exportData();
-            return true;
-        } else if (id == R.id.action_about) {
-            showAboutDialog();
-            return true;
         }
         
         return super.onOptionsItemSelected(item);
@@ -210,18 +204,7 @@ public class MainActivity extends AppCompatActivity {
         categoryAdapter.notifyDataSetChanged();
     }
 
-    private void exportData() {
-        // TODO: Implement data export functionality
-        Toast.makeText(this, "Export feature coming soon!", Toast.LENGTH_SHORT).show();
-    }
 
-    private void showAboutDialog() {
-        new androidx.appcompat.app.AlertDialog.Builder(this)
-            .setTitle("About FinTrack")
-            .setMessage("FinTrack v1.0\n\nA modern expense tracking app to help you manage your finances effectively.")
-            .setPositiveButton("OK", null)
-            .show();
-    }
 
     public void shareExpense(Expense expense) {
         String currency = SettingsActivity.getCurrentCurrency(sharedPreferences);

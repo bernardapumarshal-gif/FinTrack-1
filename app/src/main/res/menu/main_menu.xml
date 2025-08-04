@@ -7,16 +7,5 @@
         android:title="Settings"
         android:icon="@drawable/ic_settings"
         app:showAsAction="ifRoom" />
-    
-    <item
-        android:id="@+id/action_export"
-        android:title="Export Data"
-        android:icon="@drawable/ic_export"
-        app:showAsAction="ifRoom" />
-    
-    <item
-        android:id="@+id/action_about"
-        android:title="About"
-        app:showAsAction="never" />
         
 </menu> 
