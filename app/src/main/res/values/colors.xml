@@ -25,4 +25,8 @@
     <color name="category_education">#607D8B</color>
     <color name="category_utilities">#795548</color>
     <color name="category_other">#9E9E9E</color>
+    
+    <!-- Basic colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
 </resources>
