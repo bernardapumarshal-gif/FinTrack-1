@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "com.example.fintrack"
-    compileSdk = 30
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.fintrack"
         minSdk = 24
-        targetSdk = 30
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
