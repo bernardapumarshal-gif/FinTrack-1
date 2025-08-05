@@ -105,6 +105,16 @@
             android:tint="@color/error"
             android:contentDescription="Delete expense" />
 
+        <ImageButton
+            android:id="@+id/btn_edit"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_edit"
+            android:tint="@color/text_secondary"
+            android:contentDescription="Edit expense" />
+
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView> 
