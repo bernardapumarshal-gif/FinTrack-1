@@ -42,7 +42,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
     class ExpenseViewHolder extends RecyclerView.ViewHolder {
         private TextView tvTitle, tvAmount, tvDate, tvCategory, tvTime;
         private View categoryIndicator;
-        private ImageButton btnShare, btnDelete;
+        private ImageButton btnShare, btnDelete, btnEdit;
 
         public ExpenseViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -54,6 +54,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
             categoryIndicator = itemView.findViewById(R.id.category_indicator);
             btnShare = itemView.findViewById(R.id.btn_share);
             btnDelete = itemView.findViewById(R.id.btn_delete);
+            btnEdit = itemView.findViewById(R.id.btn_edit);
         }
 
         public void bind(final Expense expense) {
@@ -84,6 +85,16 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
                     if (context instanceof MainActivity) {
                         ((MainActivity) context).deleteExpense(expense);
                     }
+                }
+            });
+
+            // Edit button
+            btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    android.content.Intent intent = new android.content.Intent(context, EditExpenseActivity.class);
+                    intent.putExtra("expense_id", expense.getId());
+                    context.startActivity(intent);
                 }
             });
         }
