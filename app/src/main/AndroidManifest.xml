@@ -34,6 +34,10 @@
             android:name=".SettingsActivity"
             android:exported="false"
             android:theme="@style/Theme.FinTrack" />
+        <activity
+            android:name=".EditExpenseActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FinTrack" />
     </application>
 
 </manifest>
