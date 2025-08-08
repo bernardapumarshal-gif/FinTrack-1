@@ -186,7 +186,7 @@ This project is developed for educational purposes as part of a mobile applicati
 
 ---
 
-**Developer**: [Your Name]
+**Developer**: Bernard Ong Yuzhe
 **Course**: Mobile Application Development
-**Institution**: [Your Institution]
-**Date**: [Current Date] 
+**Institution**: Sunway University Malaysia
+**Date**: 8 August 2025
